@@ -1,49 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header> THE WAR STARTS! (CHOOSE YOUR WEAPON) 5 ROUNDS</header>
+    <div class="buttons">
+        <button value= "Rock"><img src= "https://assets.change.org/photos/1/ij/ej/sjijEJmQejKlrBB-800x450-noPad.jpg?1597428174" height="50" width="100" /></button>
+        <button value="Paper"><img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHeXFJro2is0HkNzeRwp-Dy6C5QrDSUbEGvg&usqp=CAU" height="50" width="100"/></button>
+        <button value="Scissors"><img src = "https://wh0.github.io/assets/2020/scissors-apple-open.png" height="50" width="100"/></button>
+    </div>
+    <div class="result"></div>
+    <div class="out"></div>
+    <div class="reset"><button>RESET</button></div>
+    <div class ="rp"></div>
 <script>
-let output;
-let a=0;
-let b=0;
-function computerPlay() // to pick randomly from Rock, Paper , Scissors
-{
-    let arr = ["Rock","Paper","Scissors"];
-    output = arr[Math.floor(Math.random() * arr.length)];
-    return output;
-}
-let computerSelection = computerPlay(); 
-let playerSelection;
-
-function round(playerSelection,computerSelection)  // function which plays the game 
-{
-    if(playerSelection.toLowerCase() === computerSelection.toLowerCase())
-    return "Same weapon, Try again";
-
-    else if ((( playerSelection.toLowerCase() == "rock")&&(computerSelection.toLowerCase() =="paper")) || ((playerSelection.toLowerCase() == "scissors")&&(computerSelection.toLowerCase() == "rock")) || ((playerSelection.toLowerCase() == "paper")&&(computerSelection.toLowerCase() == "scissors")))
-   {
-    a++;
-    return `You lose, ${computerSelection} beats ${playerSelection}`;  
-   }
-
-    else if ((( playerSelection.toLowerCase() == "paper")&&(computerSelection.toLowerCase() == "rock")) || ((playerSelection.toLowerCase() == "scissors")&&(computerSelection.toLowerCase() == "paper")) || ((playerSelection.toLowerCase() == "rock")&&(computerSelection.toLowerCase() == "scissors")))
+    let out1 =document.querySelector('.out');
+    let rp1 = document.querySelector('.rp');
+    let buttonR = document.querySelector('.reset');
+    let a=0;
+    let b=0;
+    let button1 = document.querySelectorAll('button'); // calls the buttons node list to the Script which will have the values. 
+    let results = document.querySelector('.result');
+    let playerSelection;
+    let  divsArr = Array.from(button1);             //  turns the node list to an array
+    button1.forEach((button) => {                   //  uses the .foreach to iteratre through the Buttons nodelist one by one.
+        button.addEventListener('click',()=>{           
+                    playerSelection = button.value;  // assigns it to playerSelection
+                    computerSelection = computerPlay();
+                    playRound(playerSelection,computerSelection); 
+                    if(a===5)
+                    {
+                        rp1.innerHTML = "Computer wins";                        
+                        a=0;
+                        b=0;
+                     //   out1.innerHTML = ` Player = ${b} and Computer = ${a}`;
+                    }
+                    else if(b===5)
+                    {
+                        rp1.innerHTML = "Player wins";
+                        a=0;
+                        b=0;
+                       // out1.innerHTML = ` Player = ${b} and Computer = ${a}`;
+                    } 
+        });
+    });
+    let output;
+    function computerPlay() // to pick randomly from Rock, Paper , Scissors
     {
-        b++;
-        return ` You win, ${playerSelection} beats ${computerSelection}`;
+        let arr = ["Rock","Paper","Scissors"];
+        output = arr[Math.floor(Math.random() * arr.length)];
+        return output;
     }
-}
-function games()
-{
-    playerSelection =  prompt("Enter the Value"," ");
-    computerSelection = computerPlay();
-    console.log(round(playerSelection,computerSelection));
-}
-for (let i=0;i<5;i++) // loop to run the program 5 times 
-{
- games();
-}
-if(a>b)
-{
-    console.log( "Computer defats Human")
-}
-else if( b>a)
-{
-    console.log( " Human defeats Comp")
-}
-</script>
+    let computerSelection = computerPlay(); 
+    function playRound(playerSelection,computerSelection)  // function which plays the game 
+    {
+        out1.innerHTML = ` Player = ${b} and Computer = ${a}`;
+        if((a==0)||(b==0))
+                        {
+                        rp1.innerHTML = "";
+                        }
+        if(playerSelection.toLowerCase() === computerSelection.toLowerCase())
+        {
+            results.innerHTML= "Same weapon, Try again, No points";
+            out1.innerHTML = ` Player = ${b} and Computer = ${a}`;
+        }
+        else if (((playerSelection.toLowerCase() == "rock")&&(computerSelection.toLowerCase() =="paper")) || ((playerSelection.toLowerCase() == "scissors")&&(computerSelection.toLowerCase() == "rock")) || ((playerSelection.toLowerCase() == "paper")&&(computerSelection.toLowerCase() == "scissors")))
+        {
+            a++;
+            results.innerHTML= `You lose, ${computerSelection} beats ${playerSelection}, Computer gains 1 point!`;  
+            out1.innerHTML = ` Player = ${b} and Computer = ${a}`;
+        }
+        else if (((playerSelection.toLowerCase() == "paper")&&(computerSelection.toLowerCase() == "rock")) || ((playerSelection.toLowerCase() == "scissors")&&(computerSelection.toLowerCase() == "paper")) || ((playerSelection.toLowerCase() == "rock")&&(computerSelection.toLowerCase() == "scissors")))
+        {
+            b++;
+            results.innerHTML = ` You win, ${playerSelection} beats ${computerSelection} , You gain 1 point `;
+            out1.innerHTML = ` Player = ${b} and Computer = ${a}`;
+        }
+    }
+        buttonR.addEventListener('click',()=>{
+            a=0;
+            b=0;
+            out1.innerHTML = ` Player = ${b} and Computer = ${a}`;
+            rp1.innerHTML= "";
+        });
+        
+    </script>
+</body>
+
+</html>
