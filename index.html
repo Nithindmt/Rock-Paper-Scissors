@@ -38,17 +38,19 @@
                     playRound(playerSelection,computerSelection); 
                     if(a===5)
                     {
-                        rp1.innerHTML = "Computer wins";                        
+                        rp1.innerHTML = "Computer wins";         
+                        results.innerHTML = "Final Round goes to Computer";               
                         a=0;
                         b=0;
-                     //   out1.innerHTML = ` Player = ${b} and Computer = ${a}`;
+                        
                     }
                     else if(b===5)
                     {
                         rp1.innerHTML = "Player wins";
+                        results.innerHTML = " Final Round goes to Human";
                         a=0;
                         b=0;
-                       // out1.innerHTML = ` Player = ${b} and Computer = ${a}`;
+                       
                     } 
         });
     });
